@@ -1,0 +1,172 @@
+networks:
+  top-network:
+    external: true
+    name: top-network
+
+services:
+  api-top-gateway:
+    build: ../backend/top-api-gateway
+    container_name: top-api-gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      db-top-gateway:
+        condition: service_healthy
+    environment:
+      DB_HOST: db-top-gateway
+      DB_PORT: 5432
+      DB_USERNAME: top-api-gateway
+      DB_PASSWORD: 123456
+      DB_DATABASE: top_api_gateway
+      DB_SYNCHRONIZE: "true"
+    env_file:
+      - ../backend/top-api-gateway/.env
+    networks:
+      - top-network
+
+  api-top-users:
+    build: ../backend/top-api-users
+    container_name: top-api-users
+    ports:
+      - "3001:3001"
+    depends_on:
+      db-top-users:
+        condition: service_healthy
+    environment:
+      DB_HOST: db-top-users
+      DB_PORT: 5432
+      DB_USERNAME: top-users
+      DB_PASSWORD: 123456
+      DB_DATABASE: top_users
+      DB_SYNCHRONIZE: "true"
+    env_file:
+      - ../backend/top-api-users/.env
+    networks:
+      - top-network
+
+  api-top-finances:
+    build: ../backend/top-api-finances
+    container_name: top-api-finances
+    ports:
+      - "3002:3002"
+    depends_on:
+      db-top-finances:
+        condition: service_healthy
+    environment:
+      DB_HOST: db-top-finances
+      DB_PORT: 5432
+      DB_USERNAME: top-finances
+      DB_PASSWORD: 123456
+      DB_DATABASE: top_finances
+      DB_SYNCHRONIZE: "true"
+    env_file:
+      - ../backend/top-api-finances/.env
+    networks:
+      - top-network
+
+  db-top-gateway:
+    image: postgres:15
+    container_name: db-top-api-gateway
+    restart: always
+    environment:
+      POSTGRES_USER: top-api-gateway
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: top_api_gateway
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data_top_api_gateway:/var/lib/postgresql/data
+    networks:
+      - top-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U top-api-gateway -d top_api_gateway"]
+      interval: 5s
+      retries: 5
+  
+  db-top-users:
+    image: postgres:15
+    container_name: db-top-users
+    restart: always
+    environment:
+      POSTGRES_USER: top-users
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: top_users
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_data_top_users:/var/lib/postgresql/data
+    networks:
+      - top-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U top-users -d top_users"]
+      interval: 5s
+      retries: 5
+
+  db-top-finances:
+    image: postgres:15
+    container_name: db-top-finances
+    restart: always
+    environment:
+      POSTGRES_USER: top-finances
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: top_finances
+    ports:
+      - "5434:5432"
+    volumes:
+      - pg_data_top_finances:/var/lib/postgresql/data
+    networks:
+      - top-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U top-finances -d top_finances"]
+      interval: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+        - top-network
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      retries: 5
+
+  frontend-main:
+    build: ../frontend/top-main
+    ports:
+      - "8080:80"
+    networks:
+        - top-network
+    restart: unless-stopped
+
+  remote-users:
+    build: ../frontend/top-users
+    container_name: remote-users
+    ports:
+      - "5001:5001"
+    networks:
+        - top-network
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  remote-finances:
+    build: ../frontend/top-finances
+    container_name: remote-finances
+    ports:
+      - "5002:5002"
+    networks:
+        - top-network
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+volumes:
+  pg_data_top_api_gateway:
+  pg_data_top_users:
+  pg_data_top_finances:
