@@ -27,19 +27,19 @@
     git clone git@github.com:Matheus-Maricondi/top-finances.git
 
 # ADICIONAR .ENVs
-    backend/top-api-gateway : 
+    backend/top-api-gateway: 
         DB_HOST=db-top-gateway
         DB_PORT=5432
         DB_USERNAME=top-api-gateway
         DB_PASSWORD=123456
         DB_DATABASE=top_api_gateway
-    backend/top-api-users :
+    backend/top-api-users:
         DB_HOST=db-top-users
         DB_PORT=5432
         DB_USERNAME=top-users
         DB_PASSWORD=123456
         DB_DATABASE=top_users
-    backend/top-api-finances :
+    backend/top-api-finances:
         DB_HOST=db-top-finances
         DB_PORT=5432
         DB_USERNAME=top-finances
