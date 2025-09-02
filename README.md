@@ -26,27 +26,6 @@
     git clone https://github.com/Matheus-Maricondi/top-users.git
     git clone https://github.com/Matheus-Maricondi/top-finances.git
 
-# ADICIONAR .ENVs
-    backend/top-api-gateway: 
-        DB_HOST=db-top-gateway
-        DB_PORT=5432
-        DB_USERNAME=top-api-gateway
-        DB_PASSWORD=123456
-        DB_DATABASE=top_api_gateway
-    backend/top-api-users:
-        DB_HOST=db-top-users
-        DB_PORT=5432
-        DB_USERNAME=top-users
-        DB_PASSWORD=123456
-        DB_DATABASE=top_users
-    backend/top-api-finances:
-        DB_HOST=db-top-finances
-        DB_PORT=5432
-        DB_USERNAME=top-finances
-        DB_PASSWORD=123456
-        DB_DATABASE=top_finances
-
-
 # PASSOS PARA RODAR OS SERVICOS
 
 # 1 - criar a rede para os containers
