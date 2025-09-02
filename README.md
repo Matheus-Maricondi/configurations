@@ -18,7 +18,7 @@
 
     mkdir backend && cd backend
     git clone https://github.com/Matheus-Maricondi/top-api-gateway.git
-    git clone https://github.com/Matheus-Maricondi/top-users.git
+    git clone https://github.com/Matheus-Maricondi/top-api-users.git
     git clone https://github.com/Matheus-Maricondi/top-api-finances.git
 
     mkdir frontend && cd frontend
