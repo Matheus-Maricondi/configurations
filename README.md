@@ -17,14 +17,14 @@
     git clone git@github.com:Matheus-Maricondi/configurations.git
 
     mkdir backend && cd backend
-    git clone git@github.com:Matheus-Maricondi/top-api-gateway.git
-    git clone git@github.com:Matheus-Maricondi/top-api-users.git
-    git clone git@github.com:Matheus-Maricondi/top-api-finances.git
+    git clone https://github.com/Matheus-Maricondi/top-api-gateway.git
+    git clone https://github.com/Matheus-Maricondi/top-users.git
+    git clone https://github.com/Matheus-Maricondi/top-api-finances.git
 
     mkdir frontend && cd frontend
-    git clone git@github.com:Matheus-Maricondi/top-main.git
-    git clone git@github.com:Matheus-Maricondi/top-users.git
-    git clone git@github.com:Matheus-Maricondi/top-finances.git
+    git clone https://github.com/Matheus-Maricondi/top-main.git
+    git clone https://github.com/Matheus-Maricondi/top-users.git
+    git clone https://github.com/Matheus-Maricondi/top-finances.git
 
 # ADICIONAR .ENVs
     backend/top-api-gateway: 
